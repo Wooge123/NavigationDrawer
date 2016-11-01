@@ -108,6 +108,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Load navigation menu header information
+     * like background image, profile image
+     * name, website, notifications action view (dot)
+     */
+    private void loadNavHeader() {
+        // name, website
+        tvName.setText("Runoob");
+        tvWebsite.setText("51simple.com");
+
+        // loading header background image
+        Glide.with(this).load(urlNavHeaderBg).crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgNavHeaderBg);
+
+        // loading profile image
+        Glide.with(this).load(urlProfileImg)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgProfile);
+
+        // showing dot next to notifications lable
+        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
+    }
+
+    /**
      * Returns respected fragment that user
      * selected from navigation menu
      */
@@ -118,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         // set toolbar title
         setToolbarTitle();
 
-        // if user select the current navigation menu again, don't do anythig
+        // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
@@ -137,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
-                FragmentTransaction framentTransaction = getSupportFragmentManager().beginTransaction();
-                framentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                framentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                framentTransaction.commitAllowingStateLoss();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
             }
         };
 
@@ -276,33 +303,6 @@ public class MainActivity extends AppCompatActivity {
 
         // calling sync is necessary or else your hamburger icon won't show up
         actionBarDrawerToggle.syncState();
-    }
-
-    /**
-     * Load navigation menu header information
-     * like background image, profile image
-     * name, website, notifications action view (dot)
-     */
-    private void loadNavHeader() {
-        // name, website
-        tvName.setText("Runoob");
-        tvWebsite.setText("51simple.com");
-
-        // loading header background image
-        Glide.with(this).load(urlNavHeaderBg).crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgNavHeaderBg);
-
-        // loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
-
-        // showing dot next to notifications lable
-        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
     }
 
     @Override
